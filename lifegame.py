@@ -3,16 +3,16 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 
-CELLS_WIDTH = 7
+CELLS_WIDTH = 11
 
 class LifeGame(object):
     def __init__(self, cells):
         self.cells = np.copy(cells)
         self.shape = cells.shape
-        print("SHAPE: ", self.shape)
+        # print("SHAPE: ", self.shape)
         # print("SLICED: ")
         # print(self.slice_surrounding_cells(cells, 3, 2))
-        print("COUNT: ", self.count_alive(cells, 2, 2))
+        # print("COUNT: ", self.count_alive(cells, 2, 2))
         # print("NEXT STEP: ", self.one_step())
 
     def slice_surrounding_cells(self, cells, x, y):
@@ -43,7 +43,7 @@ class LifeGame(object):
                 cells_next[i][j] = self.rule(self.cells, i, j)
         return cells_next
 
-    def play(self, steps = 100):
+    def play(self, steps = 200):
         for i in range(steps):
             self.cells = self.one_step()
             print("i and current cells: ", i)
@@ -51,12 +51,39 @@ class LifeGame(object):
         return self.cells
 
 
+    def one_plt(self):
+        cells_next = self.one_step()
+        self.cells = cells_next
+        print(cells_next)
+        plt.pcolor(cells_next)
+        plt.colorbar()
+
+
+FIG = plt.figure()
+
+INIT_CELLS = np.zeros((CELLS_WIDTH, CELLS_WIDTH), 'int')
+INIT_CELLS[CELLS_WIDTH//2, (CELLS_WIDTH//2-1):(CELLS_WIDTH//2+2)] = 1
+INIT_CELLS[CELLS_WIDTH//2+1, CELLS_WIDTH//2] = 1
+LG = LifeGame(INIT_CELLS)
+
+def update(t):
+    print("COUNT: ", t);
+    FIG.clear()
+    LG.one_plt()
+
+def plt_anime():
+    ani = animation.FuncAnimation(FIG, update, interval=50, repeat=False)
+    plt.show()
+
 if __name__ == '__main__':
     # cells = np.arange(49).reshape(CELLS_WIDTH, CELLS_WIDTH)
-    cells = np.zeros((CELLS_WIDTH, CELLS_WIDTH), 'int')
-    cells[CELLS_WIDTH//2, (CELLS_WIDTH//2-1):(CELLS_WIDTH//2+2)] = 1
-    cells[CELLS_WIDTH//2+1, CELLS_WIDTH//2] = 1
-    print(cells)
+    # cells = np.zeros((CELLS_WIDTH, CELLS_WIDTH), 'int')
+    # cells[CELLS_WIDTH//2, (CELLS_WIDTH//2-1):(CELLS_WIDTH//2+2)] = 1
+    # cells[CELLS_WIDTH//2+1, CELLS_WIDTH//2] = 1
+    # print(cells)
 
-    lg = LifeGame(cells)
-    print(lg.play()) 
+    # lg = LifeGame(cells)
+    # cells = lg.play(50)
+    # cells_plt(cells)
+    # lg.plt_anime()
+    plt_anime()
