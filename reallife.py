@@ -59,14 +59,14 @@ INIT_CELLS[CELLS_WIDTH//2, (CELLS_WIDTH//2-1):(CELLS_WIDTH//2+2)] = 0.5
 LG = LifeGame(INIT_CELLS)
 
 ## Art version.1
-TL = 1.0
-TH = 5.0
-F = 2.0
+# TL = 1.0
+# TH = 5.0
+# F = 2.0
 
 ## Art version.2
-# TL = 0.01 
-# TH = 2.0
-# F = 1.1
+TL = 0.01 
+TH = 2.0
+F = 1.1
 
 
 def update(t):
@@ -80,4 +80,4 @@ def plt_anime(ival = 25, save_file = False):
     # if save_file: ani.save(save_file, writer='imagemagick')
 
 if __name__ == '__main__':
-    plt_anime(50)
+    plt_anime(10)
