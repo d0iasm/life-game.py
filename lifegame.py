@@ -191,11 +191,15 @@ class LifeGame(object):
 
 
 if __name__ == '__main__':
-    CELLS_WIDTH = 11
+    CELLS_WIDTH = 30
     cells = np.zeros((CELLS_WIDTH, CELLS_WIDTH), 'int')
-    cells[int(CELLS_WIDTH/2), 4:7] = 1
-    cells[int(CELLS_WIDTH/2)+1, 5:6] = 1
+    cells[CELLS_WIDTH//2, (CELLS_WIDTH//2-1):(CELLS_WIDTH//2+2)] = 1
+    cells[CELLS_WIDTH//2+1, CELLS_WIDTH//2] = 1
     print(cells)
 
     lg = LifeGame(cells)
     lg.plt_anime(20, save_file='t-tetoromino.gif')
+
+    lg.plt()
+
+
