@@ -3,20 +3,12 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 
-CELLS_WIDTH = 11
-
 class LifeGame(object):
     def __init__(self, cells):
         self.cells = np.copy(cells)
-        self.shape = cells.shape
-        # print("SHAPE: ", self.shape)
-        # print("SLICED: ")
-        # print(self.slice_surrounding_cells(cells, 3, 2))
-        # print("COUNT: ", self.count_alive(cells, 2, 2))
-        # print("NEXT STEP: ", self.one_step())
 
     def slice_surrounding_cells(self, cells, x, y):
-        return cells[y-1:y+2, x-1:x+2]
+        return cells[max(y-1, 0):y+2, max(x-1, 0):x+2]
 
     def count_alive(self, cells, x, y):
         return np.count_nonzero(
@@ -25,13 +17,7 @@ class LifeGame(object):
     def rule(self, cells, x, y):
         count = self.count_alive(cells, x, y)
         is_alive = cells[y][x]
-        if count == 3:
-            # print("COUNT3! x, y, sliced: ", x, y)
-            # print(self.slice_surrounding_cells(cells, x, y))
-            return 1
-        elif is_alive == 1 and count == 2:
-            # print("COUNT2! x, y, sliced: ", x, y)
-            # print(self.slice_surrounding_cells(cells, x, y))
+        if count == 3 or (is_alive == 1 and count == 2):
             return 1
         else:
             return 0
@@ -50,7 +36,6 @@ class LifeGame(object):
             print(self.cells)
         return self.cells
 
-
     def one_plt(self):
         cells_next = self.one_step()
         self.cells = cells_next
@@ -61,6 +46,7 @@ class LifeGame(object):
 
 FIG = plt.figure()
 
+CELLS_WIDTH = 11
 INIT_CELLS = np.zeros((CELLS_WIDTH, CELLS_WIDTH), 'int')
 INIT_CELLS[CELLS_WIDTH//2, (CELLS_WIDTH//2-1):(CELLS_WIDTH//2+2)] = 1
 INIT_CELLS[CELLS_WIDTH//2+1, CELLS_WIDTH//2] = 1
@@ -71,19 +57,14 @@ def update(t):
     FIG.clear()
     LG.one_plt()
 
-def plt_anime():
-    ani = animation.FuncAnimation(FIG, update, interval=50, repeat=False)
+def plt_anime(ival = 25, save_file = False):
+    ani = animation.FuncAnimation(FIG, update, interval=ival, repeat=False)
     plt.show()
+    # if save_file: ani.save(save_file, writer='imagemagick')
 
 if __name__ == '__main__':
-    # cells = np.arange(49).reshape(CELLS_WIDTH, CELLS_WIDTH)
-    # cells = np.zeros((CELLS_WIDTH, CELLS_WIDTH), 'int')
-    # cells[CELLS_WIDTH//2, (CELLS_WIDTH//2-1):(CELLS_WIDTH//2+2)] = 1
-    # cells[CELLS_WIDTH//2+1, CELLS_WIDTH//2] = 1
-    # print(cells)
-
     # lg = LifeGame(cells)
     # cells = lg.play(50)
     # cells_plt(cells)
     # lg.plt_anime()
-    plt_anime()
+    plt_anime(50)
