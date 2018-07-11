@@ -74,10 +74,9 @@ def update(t):
     FIG.clear()
     LG.one_plt()
 
-def plt_anime(ival = 25, save_file = False):
+def plt_anime(ival = 25):
     ani = animation.FuncAnimation(FIG, update, interval=ival, repeat=False)
     plt.show()
-    # if save_file: ani.save(save_file, writer='imagemagick')
 
 if __name__ == '__main__':
-    plt_anime(10)
+    plt_anime(50)

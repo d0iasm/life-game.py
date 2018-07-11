@@ -57,14 +57,9 @@ def update(t):
     FIG.clear()
     LG.one_plt()
 
-def plt_anime(ival = 25, save_file = False):
+def plt_anime(ival = 25):
     ani = animation.FuncAnimation(FIG, update, interval=ival, repeat=False)
     plt.show()
-    # if save_file: ani.save(save_file, writer='imagemagick')
 
 if __name__ == '__main__':
-    # lg = LifeGame(cells)
-    # cells = lg.play(50)
-    # cells_plt(cells)
-    # lg.plt_anime()
     plt_anime(50)
